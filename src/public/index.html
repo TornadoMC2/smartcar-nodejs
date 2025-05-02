@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegoo Car TM Pose Control</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f4; }
+        #container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        /* Container for stream image and overlay canvas */
+        #stream-container {
+            position: relative; /* Needed for absolute positioning of canvas */
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            min-height: 240px; /* Placeholder height */
+            background-color: #eee; /* Background while loading */
+            display: flex; /* Center placeholder text */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Hide potential overflow */
+        }
+        #stream-container p { color: #666; } /* Loading/Error text style */
+        #car-stream-img {
+            display: block; /* Remove extra space below image */
+            max-width: 100%; /* Make image responsive */
+            height: auto;
+            background-color: #333; /* Dark background while loading */
+        }
+        #overlay-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Make canvas overlay responsive */
+            height: 100%;
+            pointer-events: none; /* Allow clicks to go through if needed */
+        }
+         /* Hidden canvas for processing */
+        #process-canvas {
+            display: none;
+        }
+        #label-container div { margin: 5px 0; font-size: 1.1em; }
+        button { padding: 10px 15px; margin: 5px; font-size: 1em; cursor: pointer; border: none; border-radius: 5px; transition: background-color 0.2s; }
+        button:disabled { cursor: not-allowed; background-color: #ccc !important; color: #666 !important; }
+        #connect-button { background-color: #5cb85c; color: white; }
+        #disconnect-button { background-color: #d9534f; color: white; }
+        #tm-button { background-color: #f0ad4e; color: white; }
+        #connect-button:hover:not(:disabled) { background-color: #4cae4c; }
+        #disconnect-button:hover:not(:disabled) { background-color: #c9302c; }
+        #tm-button:hover:not(:disabled) { background-color: #ec971f; }
+        .status { margin-top: 15px; padding: 10px; border-radius: 5px; border: 1px solid transparent; }
+        .status-connected { background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d; }
+        .status-disconnected { background-color: #f2dede; border-color: #ebccd1; color: #a94442; }
+        .status-idle { background-color: #e7e7e7; border-color: #ccc; color: #333; }
+        .prediction-bar { height: 10px; background-color: #ddd; border-radius: 5px; overflow: hidden; margin-top: 2px; }
+        .prediction-fill { height: 100%; background-color: #337ab7; width: 0%; transition: width 0.1s ease-in-out; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Elegoo Car Teachable Machine Pose Control</h1>
+
+        <div id="controls">
+            <button id="connect-button">Connect to Car</button>
+            <button id="disconnect-button" disabled>Disconnect Car</button>
+            <button id="tm-button" disabled>Start TM Control</button>
+        </div>
+
+        <div id="status-connection" class="status status-disconnected">Connection: Disconnected</div>
+        <div id="status-tm" class="status status-idle">TM Control: Idle</div>
+        <div id="status-action" class="status status-idle">Action: ---</div>
+
+        <div id="stream-container">
+            <img id="car-stream-img" alt="Car Stream" crossOrigin="anonymous" />
+            <canvas id="overlay-canvas"></canvas>
+            <p id="stream-placeholder">Connect to car and start TM to view stream.</p>
+        </div>
+        <canvas id="process-canvas"></canvas>
+
+        <div id="label-container">
+            </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
