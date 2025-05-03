@@ -22,7 +22,7 @@ The backend (`server.js`) listens for WebSocket connections from the frontend, r
     * Open your terminal or command prompt.
     * Use the following command (works on Windows, macOS, and Linux):
         ```bash
-        git clone [https://github.com/TornadoMC2/smartcar-nodejs.git](https://github.com/TornadoMC2/smartcar-nodejs.git)
+        git clone https://github.com/TornadoMC2/smartcar-nodejs.git
         ```
     * Navigate into the cloned repository's `src` directory:
         ```bash
