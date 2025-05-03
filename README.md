@@ -10,39 +10,51 @@ The backend (`server.js`) listens for WebSocket connections from the frontend, r
 
 ## Prerequisites
 
+* **Git:** Required to clone the repository. Download from [https://git-scm.com/](https://git-scm.com/)
 * **Node.js and npm:** Required to run the backend server and install dependencies. Download from [https://nodejs.org/](https://nodejs.org/)
 * **Elegoo Robot Car:** The specific car model compatible with the TCP commands used (likely an ESP8266/ESP32 based Wi-Fi car).
 * **Teachable Machine Pose Model:** You need to train your own pose model using [Google's Teachable Machine](https://teachablemachine.withgoogle.com/train/pose). Export the model (including `model.json`, `metadata.json`, and `weights.bin`) and place it in a specific directory (see Configuration). The model should have classes corresponding to the desired actions (e.g., 'left', 'right', 'move_forward', 'stop').
 * **Network:** Both the computer running the server and the Elegoo car must be connected to the same Wi-Fi network.
 
+## Setup
+
+1.  **Clone the Repository:**
+    * Open your terminal or command prompt.
+    * Use the following command (works on Windows, macOS, and Linux):
+        ```bash
+        git clone [https://github.com/TornadoMC2/smartcar-nodejs.git](https://github.com/TornadoMC2/smartcar-nodejs.git)
+        ```
+    * Navigate into the cloned repository's `src` directory:
+        ```bash
+        cd smartcar-nodejs/src
+        ```
+2.  **Install Dependencies:**
+    * While inside the `src` directory, install the required Node.js modules:
+        ```bash
+        npm install express ws net path
+        ```
+        *(Note: If a `package.json` file exists in the future, you might just need `npm install`.)*
+
 ## Configuration
 
-1.  **File Location:** Place all project files (`server.js`, `script.js`, `index.html`) inside a directory named `src/`.
-2.  **Car IP Address:**
+*Within the `src` directory:*
+
+1.  **Car IP Address:**
     * You **MUST** edit the `CAR_IP` constant in **TWO** files:
-        * `src/server.js`: Update `const CAR_IP = "192.168.4.1";` with your car's actual IP address.
-        * `src/script.js`: Update `const CAR_IP = "192.168.4.1";` with your car's actual IP address. This is used for the video stream URL.
-    * Ensure the `CAR_PORT` in `src/server.js` (default is `100`) and the stream port in `CAR_STREAM_URL` in `src/script.js` (default is `81`) match your car's configuration.
-3.  **Teachable Machine Model:**
-    * Create a directory named `model/` inside the `src/` directory.
+        * `server.js`: Update `const CAR_IP = "192.168.4.1";` with your car's actual IP address.
+        * `script.js`: Update `const CAR_IP = "192.168.4.1";` with your car's actual IP address. This is used for the video stream URL.
+    * Ensure the `CAR_PORT` in `server.js` (default is `100`) and the stream port in `CAR_STREAM_URL` in `script.js` (default is `81`) match your car's configuration.
+2.  **Teachable Machine Model:**
+    * Create a directory named `model/` inside the `src/` directory (if it doesn't exist).
     * Place your exported Teachable Machine model files (`model.json`, `metadata.json`, `weights.bin`) inside `src/model/`. The `script.js` file expects the model to be located here (`const MODEL_URL = './model/';`).
-4.  **Server Port:** The backend server runs on port `3000` by default (`const SERVER_PORT = 3000;` in `server.js`). If this port is occupied, change it here.
-5.  **Other Constants (Optional):** Review other constants in `server.js` and `script.js` (like `COMMAND_ID`, speeds, thresholds) and adjust if necessary for your specific car or preferences.
-
-## Installation
-
-1.  Navigate to the `src/` directory in your terminal.
-2.  Install the required Node.js dependencies:
-    ```bash
-    npm install express ws net path
-    ```
-    *(Note: The original `server.js` uses `require` but doesn't list dependencies in a `package.json`. This command installs the necessary modules locally.)*
+3.  **Server Port:** The backend server runs on port `3000` by default (`const SERVER_PORT = 3000;` in `server.js`). If this port is occupied, change it here.
+4.  **Other Constants (Optional):** Review other constants in `server.js` and `script.js` (like `COMMAND_ID`, speeds, thresholds) and adjust if necessary for your specific car or preferences.
 
 ## Running the Application
 
 1.  **Turn on the Elegoo Car:** Ensure it's powered on and connected to the same Wi-Fi network as your computer.
 2.  **Start the Backend Server:**
-    * Open your terminal, navigate to the `src/` directory.
+    * Make sure your terminal is still in the `src/` directory (from the Setup steps).
     * Run the server using Node.js:
         ```bash
         node server.js
