@@ -76,10 +76,11 @@ The backend (`server.js`) listens for WebSocket connections from the frontend, r
 ```
 src/
 ├── server.js
-├── script.js
-├── index.html
-└── model/
-    ├── model.json
-    ├── metadata.json
-    └── weights.bin
+└── public/
+   ├── script.js
+   ├── index.html
+   └── model/
+      ├── model.json
+      ├── metadata.json
+      └── weights.bin
 ```
